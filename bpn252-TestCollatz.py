@@ -93,8 +93,10 @@ class TestCollatz (TestCase):
         v = collatz_eval(5, 8)
         self.assertNotEqual(v, 20)
 
+    # 1000000 is not a valid input
+    # switched to 999999
     def test_eval_8(self):
-        v = collatz_eval(1, 1000000)
+        v = collatz_eval(1, 1000000-1)
         self.assertEqual(v, 525)
 
     # ---------
