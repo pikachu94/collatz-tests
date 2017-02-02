@@ -8,10 +8,6 @@
 
 # https://docs.python.org/3.4/reference/simple_stmts.html#grammar-token-assert_stmt
 
-"""
-TestCollatz.py tests Collatz.py
-"""
-
 # -------
 # imports
 # -------
@@ -21,6 +17,9 @@ from unittest import main, TestCase
 
 from Collatz import collatz_read, collatz_eval, collatz_print, collatz_solve, collatz_cycle_length
 
+"""
+TestCollatz.py tests Collatz.py
+"""
 # -----------
 # TestCollatz
 # -----------
