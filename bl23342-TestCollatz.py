@@ -2,7 +2,7 @@
 # pylint: disable=R0904
 
 """
-TestCollatz runs Unit tests for Collatz.py
+A class of unit tests for Collatz.py
 """
 
 # -------------------------------
@@ -77,6 +77,24 @@ class TestCollatzpy(TestCase):
         self.assertEqual(i_value, 50)
         self.assertEqual(j_value, 1)
 
+    def test_read_4(self):
+        """
+        string the input
+        i_value the beginning of the range inclusive
+        j_value the end of the range inclusive
+        """
+        string = "one two\n"
+        self.assertRaises(AssertionError, collatz_read, string)
+
+    def test_read_5(self):
+        """
+        string the input
+        i_value the beginning of the range inclusive
+        j_value the end of the range inclusive
+        """
+        string = "   one two three four five  \n"
+        self.assertRaises(AssertionError, collatz_read, string)
+
     # ------------
     # cycle_length
     # ------------
@@ -107,6 +125,20 @@ class TestCollatzpy(TestCase):
         num = 9023
         cycle = cycle_length(num)
         self.assertEqual(cycle, 154)
+
+    def test_cycle_length_4(self):
+        """
+        num the value for which to calculate the cycle length
+        cycle_length
+        """
+        self.assertRaises(AssertionError, cycle_length, 100000000)
+
+    def test_cycle_length_5(self):
+        """
+        num the value for which to calculate the cycle length
+        cycle_length
+        """
+        self.assertRaises(AssertionError, cycle_length, -1)
 
     # ----
     # eval
@@ -161,34 +193,49 @@ class TestCollatzpy(TestCase):
         max_cycle = collatz_eval(1650, 1800)
         self.assertEqual(max_cycle, 180)
 
+    def test_eval_8(self):
+        """
+        max_cycle the maximum cycle length
+        """
+        self.assertRaises(AssertionError, collatz_eval, 0, 1)
+
+    def test_eval_9(self):
+        """
+        max_cycle the maximum cycle length
+        """
+        self.assertRaises(AssertionError, collatz_eval, 3452, 1000001)
+
     # ------------------
     # collatz_range_memo
     # ------------------
 
-    #Testing in intervals of INTERVAL (150)
-    def test_range_memo_1(self):
+    def test_range_memo_1(self):  # Range falls in terms of INTERVAL
         """
         max_cycle the maximum cycle length
         """
         max_cycle = collatz_range_memo(1650, 1800)
         self.assertEqual(max_cycle, 180)
 
-    #Testing in intervals smaller than INTERVAL (150)
-    def test_range_memo_2(self):
+    def test_range_memo_2(self):  # Special case where interval is smaller than INTERVAL
         """
         max_cycle the maximum cycle length
         """
         max_cycle = collatz_range_memo(13, 50)
         self.assertEqual(max_cycle, 112)
 
-    #Testing in intervals greater than INTERVAL (150)
-    #With remainder
+    # Intervals greater than INTERVAL resulting in remainder
     def test_range_memo_3(self):
         """
         max_cycle the maximum cycle length
         """
         max_cycle = collatz_range_memo(175, 375)
         self.assertEqual(max_cycle, 144)
+
+    def test_range_memo_4(self):  # Failure case
+        """
+        max_cycle the maximum cycle length
+        """
+        self.assertRaises(AssertionError, collatz_range_memo, 0, 0)
 
     # -------------------------
     # calculate_max_in_interval
@@ -214,6 +261,19 @@ class TestCollatzpy(TestCase):
         """
         max_cycle = calculate_max_in_interval(344, 4550)
         self.assertEqual(max_cycle, 238)
+
+    def test_max_in_interval_4(self):
+        """
+        max_cycle the maximum cycle length
+        """
+        self.assertRaises(AssertionError, calculate_max_in_interval, 0, 0)
+
+    def test_max_in_interval_5(self):
+        """
+        max_cycle the maximum cycle length
+        """
+        self.assertRaises(
+            AssertionError, calculate_max_in_interval, -1, 1000000)
 
     # ------------
     # collatz_memo
@@ -304,6 +364,37 @@ class TestCollatzpy(TestCase):
         collatz_solve(reader, writer)
         self.assertEqual(
             writer.getvalue(), "234 13204 268\n41 399 144\n10000 999 262\n12 12931 268\n")
+
+    def test_solve_4(self):
+        """
+        reader a reader
+        writer a writer
+        """
+        reader = StringIO("           ")
+        writer = StringIO()
+        collatz_solve(reader, writer)
+        self.assertEqual(
+            writer.getvalue(), "")
+
+    def test_solve_5(self):
+        """
+        reader a reader
+        writer a writer
+        """
+        reader = StringIO(" \n ")
+        writer = StringIO()
+        collatz_solve(reader, writer)
+        self.assertEqual(
+            writer.getvalue(), "")
+
+    def test_solve_6(self):
+        """
+        reader a reader
+        writer a writer
+        """
+        reader = StringIO(" one two ")
+        writer = StringIO()
+        self.assertRaises(AssertionError, collatz_solve, reader, writer)
 
 # ----
 # main
